@@ -1,0 +1,1327 @@
+/**
+ *                        Angular architecture
+ *    Angular app - is made up of one or more MODULES
+ *    Module  - is made up of one or more COMPONENT and SERVICES
+ *    Component - is made up of HTML  and a  CLASS
+ *    Service - Where the business logic of your application is stored
+ * 
+ * 
+ * 
+ *                             ***********PARTS OF ANGULAR COMPONENT **********
+ *            TEMPLETE -Contains the html of the component
+ *             CLASS - Contains the code in type script ,the data & methods for the component
+ *              METADATA -Contains the decorators which tell angular the type of component this is
+ * 
+*
+* *              In Agular we have  Components like in react.This componets are used to host
+ *              Different parts of the app 
+ * 
+ *      CREATING COMPONENTS 
+ * .....There are three steps to creating a component in angulars js
+ *             1.creating a component
+ *              2.Regester that component in a module
+ *               3. Add an elememt in an HTML mark up. 
+ *  
+ * 
+ * 1. Creating a component
+ *   When creating a component in angular , we follow this convention  
+ * 
+ *  name.component.ts        // If a component has multiple names we speparate using  hyphen
+ *
+ * In the component , make and export a classs.We export thee class to make it visible outside of the  component
+ * The class componen t contains data that cam be redered in the view via the html in  the templete
+ * Name  the class using camel casig i.e first leter is capital only
+ *     
+ * export class Torchcompont{ 
+ * 
+ * }
+ * 
+ * To make the named class a component ,import and instanciet the {Component} decoorator from the angular core libray
+ *       import { Component} from '@angular/core'
+ *
+ *          @Component(
+ *                        {
+ *                          selector:'courses',                            //Angular uses this to dispaly the contnt in this component(or the templete) as html  e.g in index html to diplsy the coneten in this component/templete, we type <courses><courses/>  based on the name give to the selectors.. that is right ,this are custom tags in angular.
+ *                         template:"<h2>Courses</h2>"                     //Defines the html  to be rendered in from this component.The html for this templete or component can be directly written like above or written in another file and imported as "templeteURL:'./files/index.html'"
+ *                          stylesUrls:[]
+ *                          } 
+ *               )
+ *              export class Torchcomponent{ }
+ * 
+ * }
+ * 
+ * ********note*********** There are THREE ways of creatinfg a SELECTOR  1. Create custom tag as seen above. selector:'courses'   to refer to the custom html tag created <courses><courses/>  
+ *                                                                       2. Create the selector as a class e.g selector: ".courses"    to refer to the html tag with a class of courses i.e <div class="courses">
+ *  *                                                                    3. create selector in square brackets e.g selector: [courses]  and refer to it in a html tag e.g <div courses>
+ *  
+ * * ********note*********** There are three ways of creating a templete to render html:   1 . Creating HTML in ONE LINE using quotation marks   e.g   template:"<h2>Courses</h2>" 
+ *                                                                                          2.  Creating HTML in MULTIPLE LINES using backticks     e.g  template: `<h1>  Hellow eliud <h1/>
+ *                                                                                                                                                   <div>Hwllow george<div/>`
+ *                                                                                          3. Creating an eternal html file and refering to it via templete url e.g  templateUrl:'./app.component.html' 
+ * 
+ * * ********note*********** There are THREE ways of creating a Styles to render css : 1. Writing the css inline in multile lines using back ticks e.g style:[`div{
+ *                                                                                                                                                                  color:red 
+ *                                                                                                                                                            }`]
+ *                                                                                     2. Writing the css in an external file and refering to it via url styleUrl:['.app.component.css] 
+ * 
+ * 
+ * 
+ *  2       REGESTER THAT COMPONET IN  A MODULE 
+ *     a.     We make a module file  following the cvection of name.module.ts
+ *                  app.module.ts      
+ *     
+ *     b.   In this module file we imort a {Ngmodule} decoration from    angular/core 
+ *          We instanciet the Ngmodule and pass in it declrations of the  imported components
+ *                  import { NgModule } from '@angular/core';
+ * /*                        @ngmodule/{
+ *                                       declaration:[{ 
+ *                                                Torchcomponet
+ *                                                     }]
+ *                                       }  
+ * 
+ * 
+ *      3 Add the custom element created using selector  in the compoent 
+ *            i.e  
+ *          @Component(
+ *                 selector:'courses',                        //This 'courses'  .We add it as a custom html component
+ *                 template:"<h2>Courses</h2>"  
+ *                    )
+ *              export class Torchcomponent{}
+ *                       
+ * 
+ *           We add this custom html component in a html file e.g app.component.html , in order for the html in the Torchcomponent to be renderd i.e the  <h2>courses<h/> 
+ * 
+ * 
+ * 
+ *    <*********************  NOTE: Using NG to generate compomemts *********************>
+ *          Instaed of going Through the above pain and all of that code.Angular can automaticlay generate a component
+ *           for you with  css, module and the component itself by using the following command 
+ *                     ************ ng g c <name> *************
+ * That is ng generate component <name>        e.g  ng g c course     //This generates a componwnt callled course
+ *      ng g  
+ * 
+ * 
+ * 
+ *                                     ********************* Interpolation ************
+ *          This is redering information from class onto html view using double brackets 
+ *           Within this brackets we can do all javascript methods e.g addition         <h1>{{2+2}}<h1/>
+ *  *                                                                 concarination       <h1>{{"This is "+title}}<h1/>
+ *                                                                     call methods         <h1>{{greetuser()}}<h1/>       
+ *                                                                                      <h1>{{title.lenth}}<h1/>
+ *         Note: You can note assign values using interpolation 
+ *                     NOT ALLLOWED e.g  Global javascript variable e.g windows
+ *                                       Assignment of varables e.g a =7
+ * 
+*                          But you can do all of this in the class 
+ * 
+ *                  Example:  ----->
+ * 
+ *                            @Component(
+ *                                        selector:'courses', 
+ *                                       template:"<h2>{{title}}</h2>"               
+ *                                              )
+ *                                     export class Torchcomponent{
+ *                                               title= "Helllow George"                              // By default all named things are given public access modifiers. This title is the same as saying public title =""
+ *                     
+ * 
+ *                                 }
+ * 
+ *                       **************************    DATA BINDING  & EVENT BINDING       *************************
+ * 
+ * 
+ *                                                      __________________
+ *                                                ---->|    Templete      |------           
+ *                                               |     |__________________|      |
+ * *                              Data binding   |                               | Event binding 
+ *  *                                            |      __________________       |
+ *                                               |     |      Class       |      |       
+ *                                                ---- |__________________| <----
+ *                                               
+ *                                          
+ *                                **************************    Data Binding    *************************
+ *        
+ * 
+ * 
+ *                                       *******************   Property Binding   **************
+ *                                       
+ *                         Atributes - They do not change and are for the HTML
+ *                         Property - They can change and are for the DOM
+ *                       To enable property binding we use SQUARE BRACKETS  or the BIND-  e.g [id] or bind-id 
+ * 
+ *                 To enable Change of property in angular we use square brackets around the property e.g <input [disabled] ="isDisabled"><input/>        
+ *                  This is called property binding                                                                           export class Torchcomponent{
+ *                  We do this because some properties may not work in angular                                                isDisabled= "true"          
+ *                  e.g if we use  disabled without the propperty binding,it is set to true and cant be changed                                                                                                                    }
+ *                   How ever if we use property binding ,we can change the diable property  in the class  or inline                                                                                              
+ *                      We CAN NOT  use interpolation e.g <input disabled ={{isDisabled}}><input/>    
+ *                        This is because interpolation works only for string values
+ *                         In the above exaple disabled takes in boolean values.There for interpolation wont work for it                                                                                      
+ * 
+ * 
+ *                   ****** Note normal class and property bound class .If used together ,The property bound class gets excuted as it has moore ponts
+ *                      <h1 class="color green"  [class]="color red">           The property bound class is excuted  i,e color red
+ * 
+ *                   ****** Note .To condictionaly render a class based on  an expression of true or false
+ *                         use class binding dot the desired class to be rendred contionaly  and equet it to the true or false epression
+ *                                  <h1 [class.colorred]= "true">          If the expression is true ,the class is excuted ,if it is not true ,the class is not excuted                     
+ *                        or        < h1 [class.colorred]= "hasColor">
+ *                                      export class Torchcomponent{
+ *                                                     hasColor:true
+ *                                                                }
+ *                   ******* Note . If we want to use many claases to conditionaly render a html tag we use NGCLASS derivertive
+ *                                 < h1 [ngClass]= "hasColor">                    //This will be in red and italics
+ *                                      export class Torchcomponent{
+ *                                                     hasColor:{
+ *                                                          color-red:true
+ *                                                          color:green:false
+ *                                                           italics:true
+ *                                                             }
+ *                             // This is usefull because it helps u add or remove certain state based on user interaction
+ * 
+ *                 
+ *                                            ****************  Style Binding *****************
+ * 
+ *                              This can be used to render styles on html tags 
+ *                              How we do this is by writting styles dot the style property we want to change e.g color ,font. Then we put the style value between sigle quotes in the quotattion marks e.g "'red','green'"
+ *                             <h1 [style.color] ="'red'">     Helllow World <h1/> 
+ * 
+ *                                    *** If we wanted to conditionaly render The styles ******
+ * 
+ *                                  We can Change the color based on if a value is true of false
+ *                                  Here if has color is true the color is red ,if it is false ,the color is green
+ *                                           < h1 [style.color]= "hasColor? red : green">                    
+ *                                      export class Torchcomponent{
+ *                                                     hasColor:true
+ *                                                                 }       
+ * 
+ * 
+ * 
+ *                                  ******* We can aslo declare a color in the class and acess it **********
+ *                                 The h1 here below will be green in color
+ *                                     
+ *  *                                          < h1 [style.color]= "hasColor">                    
+ *                                      export class Torchcomponent{
+ *                                                     hasColor="green"
+ *                                                                 }   
+ * 
+ *                                    ******* We can also appley multiple styles using the class derivative *******
+ *                                     
+ *                                            < h1 [ngStyles]= "hasColor">                    
+ *                                      export class Torchcomponent{
+ *                                                     hasColor={
+ *                                                       color:"green"
+ *                                                        font:"new times roman"                                                          
+ * }
+ *                                                                 }   
+ * 
+ * 
+ * 
+ *                       **************************    EVENT BINDING    ************************* 
+ * 
+ *                      Event binding lets you listen for and respond to user actions such as keystrokes, mouse movements, clicks, and touches.     
+ *                       To bind to an event you use the Angular event binding syntax. 
+ *                       This syntax consists of a target event name within parentheses to the left of an equal sign, and a quoted template statement to the right.
+ *                           e.g <button (click)="onClick()">Add</button> 
+ *                                                   export class Torchcomponent{
+ *                                                              onClick(){
+ *                                                                     console.log("Hellow World")
+ *                                                                   }                                          
+ *                                                                         
+ *                                                                 }  
+ * 
+ * 
+ * 
+ *                               ****************** Templete Referncer Variable ***************
+ * 
+ *                             It is precceded with a hash. It is used to identify the value received from users imput or dom variables
+ *                            e.g #variable
+ *                                <input #userInput  type="text">
+ *                               <button (click)="message(userInput.value)" >Log <button/>
+ *  *                                                   export class Torchcomponent{
+ *                                                              message(value){
+ *                                                                     console.log(value)
+ *                                                                   }                                          
+ *                                                                         
+ *                                                                 }  
+ * 
+ * 
+ * 
+ * 
+ *                                ****************** Two Way Binding ***************
+ *                       This is used to sync or update the data in the class as the user inputs it.
+ *                       This makes use of Property binding(), and event binding[]  i.e [()]
+ *                       
+ *                   
+ *                       It makes use of the ngModel, e.g [(ngModel)] =""
+ *                       The ngModel has to imported in the root app.model  from the form module
+ *  
+ *                                                 <input [(ngModule)]="name"  type="text">
+ *                                                    {{name}}
+ *                               
+ *  *                                                   export class Torchcomponent{
+ *                                                              name=""                                                                                                             
+ *                                                                         
+ *                                                                 } 
+ *                        
+ * 
+ *  *                                ****************** Structural Directives ***************
+ *                     This are directives that enable you to add or remove html elements based on true or false
+ *                                            ______
+ *                           ngIf                   |____These are used to conditionally render html elements 
+ *                           ngSwitch         ______|
+ *                           ngFor     <-----------------These is used to conditionaly render a list of html elememnts 
+ * 
+ *                                            *************** ngIf **************
+ * 
+ *                   e.g <h1 *ngIf="true">Hellow WOrld<h1/>          //This html element will be visible
+ *                   e.g <h1 *ngIf="false">Hellow WOrld<h1/>         // This html elenemt will not be visible
+ *                
+ *                   This *ngIf can also take an else statememnt i.e if the ng is false ,Another html elememnt will be rendred in its place
+ *                   Precced the desired html elememnt by enclosing it in <ng templete> and give this ng temlete a templete refernce variable                 
+ *                   The ng templete is used to enclose html elemnts that can be used by the ng directive
+ *                      <h1 *ngIf="false";  else elseBlock >Hellow WOrld<h1/>
+ *                             <ng templete #elseblock > 
+ *                                 <h2>Hellow George<h2>
+ *                               <ng templete/>
+ * 
+ *                     There Cna aslo be another way of displaying this. If the ngIf is true THEN it diplays the theb block,else if it is false ,it Displays the else block 
+ * 
+ *  *                      < div   *ngIf="false"; then thenblock   else elseBlock ><div/>
+ *                             <ng templete #thenBlock > 
+ *                                 <h2>Hellow George<h2>
+ *                               <ng templete/>
+ * *                             <ng templete #elseblock > 
+ *                                 <h2>Hellow World<h2>
+ *                               <ng templete/>
+ * 
+ * 
+ * 
+ *  *                                     *************** ngSwitch **************
+ * 
+ * 
+ *                      This works like the normal switch ,but this time ,for html elemnts 
+ *                         <div [ngswitch] = "color" ><div/>
+ *                              <div *ngSwitchCase ="'red'"> You picked Red <div> 
+ *                              <div *ngSwitchCase ="'blue'"> You picked blue <div> 
+ *                              <div *ngSwitchCase ="'green'"> You picked green <div> 
+ *                              <div *ngSwitchDefaul> Pick Again <div> 
+ * 
+ *   *  *                                                   export class Torchcomponent{
+ *                                                              color="red"                                                                                                             
+ *                                                                         
+ *                                                                 } 
+ * 
+ * 
+ *  *                                     *************** ngFor **************
+ * 
+ *                            This works like any other for loop i.e It iterets through items, only this time they are html items
+ *                                              _____This is the for loop_____           ///This displays all items in the color array
+ *                               <div *ngFor ="let color of colors">
+ *                                 <h1>{{color}}<h1/> 
+ *                                        </div>
+ *  *   *  *                       export class Torchcomponent{
+ *                                  color=["red","green","blue","food","chips"]                                                                                                             
+ *                                                                         
+ *                                     } 
+ * 
+ * 
+ *  *                                     *************** Component Interaction **************
+ *                      Parent and child components can send and receive data from each other by @input() and @output() decorators
+ * 
+ * 
+ * 
+ *                                                      __________________
+ *                                                ---->|    parent        |------           
+ *                                               |     |____component_____|      |
+ * *                                  @output()  |                               | @input() 
+ *  *                                            |      __________________       |
+ *                                               |     |     Child        |      |       
+ *                                                ---- |____Component_____| <----
+ * 
+ *                    ***********  SENDING DATA FROM PARENT TO CHILD ****************
+ *
+ *
+ *                    The parent component send the data trouch the custom html selector tag ot the child component
+ *                        e.g selector:'courses',                         //Child component
+ *                           <courses [parentData]="name"><courses/>      //child component  . The "name is the data being passsed from  parent component to child componenet"
+ * 
+ *                
+ *                      This is how we acess the data sent from the parent component. We precced the receing part with an @input() decorator that is imported
+ *                                 <h1>{{"Hellow"+ parentData}}<h1/>
+ *                                  export class Torchcomponent{
+ *                                  @input() parentData;                                                                                                             
+ *                                                                         
+ *                                     } 
+ * 
+ *                      We can also give the precceing part a dirreernt name that is custom to this component
+ *  *                     <h1>{{"Hellow"+ name}}<h1/>
+ *                       export class Torchcomponent{
+ *                               @input('parentData') name   
+ *                                                  }
+ * 
+ * 
+ * 
+ *                    *********************  SENDING DATA FROM CHILD TO PARENT  *********************
+ * 
+ *                  The child has no parent selector component i.e [parentData] . Ther for the data from the childe is sent 
+ *                  to the parent through events that are emitted via the @output() decorator
+ *            
+ *                   To create an event to send data to the parent componet .We create the event throuth the eventemitter
+ *                   and then export it via the @output() decorator 
+ *     
+ *                  @output()  childEvent = new EventEmitter
+ * 
+ *                  childEvent.emit("This is the data to be sent from child to parent")
+ * 
+ * 
+ *                  To Receive the data from the  child in the parent component . we use (childEvent) to signify reception of the data and $event is the data.We put the data in a custom variable i.e "message" 
+ *                 we use (chileEvent) = "message=$event"
+ * 
+ * 
+ *                                     ********************* PIPES  *********************
+ *              These enamble transformation of data before it  is presented to the view/browers.
+ *              The pipe is created as below {{name | upppercase}} 
+ * 
+ *                          <h1>{{name | uppercase}}<h1/>               // This pipe presents the name in  capital letter i.e GEORGE MUNYAMBY
+ *                          <h1>{{name | lowercas}}<h1/>               // This pipe presents the name in  lower letter i.e george munyambu
+ *                          <h1>{{name | titlecase}}<h1/>             // This pipe presents the name in  title case i.e George Munyambu
+ *                          <h1>{{name | split:3}}<h1/>              // This pipe presents the name in slices starting from 3rd charater i.e  orge munyambu
+ *                          <h1>{{name | split:3:8}}<h1/>           // This pipe presents the name in slices starting from 3rd charter upto but not including 8th charcter i.e orge mu
+ *                          <h1>{{name | json}<h1/>                // This pipe presents the name in json 
+ * 
+ * 
+ *  *                       <h1>{{number | 1.3-5 }}<h1/>   5.687      // This Is saying we need one digit in integer and a minimun of three in decimal and max of five      // This pipe presents the number as    
+ *                          <h1>{{number | 1.4-6 }}<h1/>   5.6870     // This is saying we need one digit in inter , min offour numbers in decimal but max of six digits
+ *                          <h1>{{number | 3.1-2 }}<h1/>   005.69     // This is saying three numbers in integer , min of one number in decimal and max of two                        
+ * 
+ *                          
+ *                          <h1>{{number | percent }}<h1/>   5.687%                     // This gives percent to the number
+ *                          
+ *                          <h1>{{number | curency }}<h1/>   $5.6870                   // This gives default currecny of dollar
+ *                          <h1>{{number | currency:"eur"}}<h1/>   e005.69            // This gives specifird currency                 
+ *                          <h1>{{number | currency:"eur":"GDP"}}<h1/>   GDP005.69   // This gives code of specified currency                        
+ * 
+ *                          <h1>{{ date | date:"short"}}<h1/>                09/09/2021 12:19pm       // Gives both time and date
+ *                          <h1>{{ date |  date:"shortdate"}}<h1/>           09/09/2021              // Gives only date
+ *                          <h1>{{ date | date:"shorttime"}}<h1/>            12:19pm                // Gives only time
+ * 
+ *                       
+ *                       export class Torchcomponent{
+ *                                 name = "George munyambu" 
+ *                                 number= 5.675
+ *                                 date = new Date()
+ *                                 date = 09/09/2021 12:19:33 pm  508176+05:30
+ *                                                  }
+ * 
+ * 
+ *  *                    ********************* Services  *********************
+ *                     This is a component with a specific purpose only
+ *                            This purpose can be
+ *                                           1. To share date to other components
+ *                                           2. Implement application logic
+ *                                           3.External interaction e.g receive data from APIs
+ *                          Naming convention is <name>.service.ts
+ *          
+ * 
+ *                                     <!  **** Dependency Injection **** !>
+ *                        
+ *                      Dependency injection is a codding pattern in which a class receives its dependencies from
+ *                      external sources rather than creating them itself
+ *                     The DI framework provides an injector which houses all the dependacies needed by the component
+ *                     Then this injector provides this dependencies when needed by the component.
+ * 
+ *                               1. Define the class i.e To define a service component we use>>>>>>> ng g s <service name> i.e emplyeeservice.serve.ts
+ *                               2. Rejester the class with angulars injector in the 
+ *                                 app module in Provides to make it accessible to all components in 
+ *                                  the app module i.e  providers: [<sevice name>
+ * 
+ *                                 app module    {
+ *                                                  providers: [emplyeeservice],
+ *                                               } 
+ * 
+ * 
+ *                               3. Declare as dependancy where needed 
+ *                                  This <service> namy contain a list of employess needede in e.g an employeelist component .
+ *                                  For the data to move from the service component we put it in a method in the service component
+ *                                 e.g <service component>
+ *                                     employeelistmethod(){
+ *                                return ["george","eliud"]
+ *                                         }
+ *                                
+ *                                 For The data to be received in the desired component.
+ *                                We declare whre the data is to be received 
+ *                                     public employeelist=[]
+ *                                We  then receivr the data in the constructor  via custom service name in the component to receive the dtate from the 
+ *                                    constroctor(private _customsrvicename :emplyeservice){
+ * 
+ *                                               }
+ * 
+ *                              We then nees to use the ngOnint method to receive the data and give it to the declared recierveer  i.e public employee list=[]
+ *                              for the data to be called we  use the custom servise name to clall the metod containing the data in the employee service
+ *                                        
+ *                               ----> public employee list = []
+ *                              |
+ *                              |     constroctor(private _customsrvicename :emplyeservice){
+ *  *    This puts the list     |
+ *    gotten from  the service  |                }
+ * *  into here in the          |
+ *       employee list          |        ngOnint (){
+ *                              |_______ this.employee list= this._customservicename.employeelistmethod()
+ * 
+ *                                             }
+ * 
+ *
+ * 
+ * 
+ * 
+ *
+ *
+ *                                       *******    HTTP and Observables  *****
+ *                             The data to be sent from the service e.g list of employees may not be hard coded
+ *                             This data may come from a data base or server .To get the data we use http request                            
+ *                             The response with the data comes back to the http.
+ *                             The data from the http to the service is give as an OBSERVABLE
+ * 
+ *                             
+ *  *  *                                            __________________    
+ *                                                 |      service     |       
+ *                                                 |__________________|
+ *                            Observable ------->      |           |    <--------- get       
+ *  *  *                                            ___|___________|__    
+ *                                                 |      Http        |       
+ *                                                 |__________________|
+ **                             response ------->      |           |    <------- request 
+ *  *  *                                            ___|___________|__    
+ *                                                 |      data base   |       
+ *                                                 |______server______|
+ * 
+ * 
+ *                           *************** OBSERVABLE **************
+ *                           This is a sequence of items /sequence of http response that arrive asynchronasly over time
+ *                                Hppt call = single item
+ *                                single item = http response 
+ * 
+ *                      RxJs - Reactive Extensions for Javascript
+ *                             This is an external libray that enables us to work with observables
+ * 
+ *                                              ************** HTTP ******************
+ *          To enale This .We use HttpClient modue in app module .We include it in the imports
+ *             i.e imports :[httpclientmodule]
+ *
+ *            In  the service we include the httpclient as a dependacy in the constructor
+ *      
+ *                    constructor(private _http: HttpClient) { }
+ *                                                     }
+ *             
+ *            To make the get request ,we use the custom http name i.e _http in a method
+ *                            getemployes(){
+ *                                    return this._http.get("url")
+ *                                        }
+ * 
+ *           WE aslso need to add an observable and an interface to the method and the get reqesst
+ *            The interface describes the structure of the data to be received
+ *   e.g export interfac InterfaceEmolpye{
+ *                               id:number,
+ *                               name:string,
+ *                               age:number,}
+ *
+ *               Now we  need to add the  Observable and intrface.Observable starts with a capital letter
+ *
+ *  *                            getemployes():Observable <interfaceEmployee []/>{
+ *                                    return this._http.get:<interfaceemployee[]/>("url")
+ *                                        }
+ * 
+ * 
+ *               
+ *               Then you need to subscribe to the obsevable in the components that requre this data
+ *                This subscribtion is done after the  method in the service thats giving the data is called 
+ *                On subscribing to the observable ,we need to assign the data received to a local variable
+ *                 You subscribe in the onInt method
+ *
+ * *                            ------> public employee list = []                     //This is the local variable receiving the data
+ *                              |
+ *                              |     constroctor(private _customsrvicename :emplyeservice){
+ *  *    This puts the list     |
+ *    gotten from  the service  |                }
+ * *  into here in the          |
+ *       employee list          |        ngOnint (){
+ *                              |_______ this._customservicename.getemployes()
+ *                                                              .subscribe( datareceived => this.employeellist = datareceived )            // This assigns the data received to a local  variable
+ * 
+ *                                             }
+ * 
+ * 
+ * 
+ *  *                                         ************** Handleing Http errors ******************
+ *                                  The http error handling is done whre the http request is made i.e In the service component
+ *                                  We import a http error handler provided by angular 
+ *                                             import 'rxjs/add/operator/catch'
+ *                                        
+ *                                  We then  neee to add a CATCH method that holds the error handler method
+ *                                  This method will be called every time ther is an error   
+ *
+ *                                   getemployes():Observable <interfaceEmployee []/>{
+ *                                              return this._http.get:<interfaceemployee[]/>("url")
+ *                                                               .catch(this.errorhandlermethod)
+ *                                                                                            }
+ *                                                errorhandlermethod(errro:HttpErrorResponse){
+ *                                                                                          }   
+ *NOTE ** The roor handler method receices a parametr error of type HttpErrorResponse. This HttpErrorResponse is imported 
+ *                         
+ *                                     The service component has no html to display the error .
+ *                                     How ever components that have subscribed to the Observable have access to the  servce
+ *                                     So we throw an error through the observable that can can be accesed by components that have subscribe to the obsevable
+ *                                     We also have to import the observable   i.e import 'rxjs/add/Observable/throw'
+ *                                                                
+ * *                                                errorhandlermethod(errro:HttpErrorResponse){
+ *                                                          return Observable.throw(error.message || server errro)   
+ *                                                                                          } 
+ *                                  
+ *                                        Now we have throw our http error to the subscribed components
+ *                                        Now its time for the subscribed components to take the error and display it in the view or html
+ *                                                   In the Subscribed component 
+ *                                                       
+ *                        // Declare a valiable to receive the error 
+ *                                            errordisplay=""                            
+ *                                       ngOnint (){
+ *                                            this._customservicename.getemployes()
+ *                                                                   .subscribe( datareceived => this.employeellist = datareceived 
+ *                                                                                 error => this.errordisplay = error )            // This assigns the data received to a local  variable
+ * 
+ *                                             }
+ * 
+ * 
+ *                          // After the error has been put in the variable .Then you can display it in the teplete or html through interpolation
+ *                          e. <h1>{{errordisplay}}>h1/>
+ * 
+ *
+ *
+ *  
+ * 
+ *
+ *
+ *                                        ************** Routing in Angular ******************
+ *
+ *                            Routing in agular enables us to navigate to different routes.
+ *                            Routing is enabled by routing module i.e app-routing.modues.ts
+ *                            It is in this component that we regester all our different route paths and their iintended components
+ *                                        
+ *                                           import { RouterModule, Routes } from '@angular/router';
+ *                                          import { DepartmentComponent } from './department/department.component';
+ *                                                  
+ *   //Here is whre we regester             const routes: Routes = [
+ *   //the paths  to the different                 {path:'department',component:DepartmentComponent},
+ *   //components                                                {}
+ *                                                             ];
+ *
+ *                                         ....Now This is done .How do we go to /departments is to rejester the 
+ *                                           <router-outlet></router-outlet> in the app.component .html
+ *
+ *
+ *                                To enable use of buton to navigate to the routes we  use anchor tags with routerlinks
+ *                                    <a routerLinks ="/departments"> Departments</a>
+ *
+ *  
+ *                              We give the routerLinkActive , directive a class of e.g "active" to apply classes to give the dutton or ancor tag style 
+ *
+ *
+ * *                                        ************** Wild card routes ******************
+ *
+ *                        Wild card routes are routes that do not exist .To avoid an error on the browser. We can filter all pages that are not regestered in our website
+ *                        To capture all wild route, we use the double asterisc "**" and a component where all the traffic will be directed to
+ *
+ *
+ *                                          import { RouterModule, Routes } from '@angular/router';
+ *                                          import { DepartmentComponent } from './department/department.component';
+ *                                          import { ErroPageNotfound } from './department/department.component';
+ *                                                  
+ *   //Here is whre we regester             const routes: Routes = [
+ *   //the wild cardsto be directed to                 {path:'department',component:DepartmentComponent},
+ *   //a default error component                          {path:'**',component:ErroPageNotfound}
+ *                                                             ];
+ *
+ * *
+ *              Note : Angular excutes code from the top to the bottom. So always put the wild cards at the bottom 
+ *  
+ * 
+ *
+ ** *                                        ************** Redirect to ******************
+ *
+ *
+ *
+ *                                          import { RouterModule, Routes } from '@angular/router';
+ *                                          import { DepartmentComponent } from './department/department.component';
+ *                                        
+ *                                                  
+ *   //Here is whre we regester             const routes: Routes = [
+ *   //the wild cardsto be directed to                 {path:'department',component:DepartmentComponent},
+ *   //a default error component                          {path:'',redirectto:'/departmemt', pathmatch:full}
+ *                                                             ];
+ *
+ *
+ *
+ *
+ *
+ * *
+ * ** *                                        ************** Handling Forms in Angular ******************
+ * *                                           Forms are used to -
+ *                                                                regester                      Place an order
+ *                                                                log in                       Schedule an appointment
+ *                                                                submit request               
+ *
+ *
+ *                                              To create a good user experience We need to handle
+ *
+ *    *                                                  *   Data binding              *    Visual Feedback 
+ * *                                                     *   Change tracking           *   Error messages 
+ * *                                                     *   Validation                *   Form submission
+ * *                                                               
+ * *                                             To be able To do all this we need                  
+ * *                                                               
+ * *
+ * *                __________________           __________________           _________________         _________________            
+ *                 |     Template     |----->   |      Class       |----->   |     Service     |-----> |     Server      |               
+ *                 |__________________|         |__________________|         |_________________|       |_________________|         
+ * *                  Collects data                 binds data                   sends data             
+ *
+ *
+ *
+ * * ** *                                        ************** There are Two approaches to do this ******************
+ * *
+ *                                       1. Templete Driven forms
+ *                                             -This is heavy on using the templete component
+ *                                             -I.e Most of the code is written in the templete component 
+ * 
+ * *                                     1. Reactive forms
+ *                                            -This is heavy on using the templete component
+ * *                                          -I.e Most of the code is written on the class component  
+ *
+ *
+ *
+ * * ** *                                        ************** Templete Driven Forms In Angular ******************
+ *
+ *                                                 - This relies mostly on the html in the template
+ *                                                 - Two way data binding is mostly used with the ngModel
+ **                                                - It leads to bulky html and less component code
+ **                                                - Automaticaly tracks the forms state and form elememts state and validity
+ **                                                 
+ *                                    Drawbacks    - Readability decreases with comples forms and validations  
+ **                                                - Unit testing is a challenge 
+ **                                                - Go with Templete forms where validation can be done on the browser.  
+ * **                                              - But for complex validations , go with reactive forms    
+ **                                                - The tdf are suitable for simple sinarios 
+ **                                                  
+ * **                                                 
+ **                                                 
+ *                                       To start working with forms in angular .Import the Forms Module in the app.modules and include it in the  imports
+ **                                            import {formsModule} from '@angular/core' 
+ *                                                     imports:{    
+ *                                                        browsermodule,
+ **                                                       formsmodule
+*                                                                }
+ **                                                 
+ * **                                                 
+ **                                       Now In the component with the form. We are give access to the value in the form by the ngForm module created by formsmoduel          
+ **                                        Now the form values are stored in the ngForm.To access the values in the ngForm .We assign the ngform to a templete refernce variable
+ *          
+ *   **                                        <form #formvalues = "ngForm">         
+ **                                                 <label>Your Favourite food<label>                           i.formvalues={}
+ **                                                 <input type='text'>
+ *                                               <form>  
+ **                                                 
+ **                                                 
+ * **                                          Now for the information from the user to be put in the ngForm ,we have to include the "NGMODULE" whrever the user input is taken       
+ **                                             This enables the data from user to be put in ngForm   
+ *  
+ **                                                <form #formvalues = "ngForm">         
+ **                                                 <label>Your Favourite food<label>                           i.formvalues={}
+ **                                                 <input type='text' ngModule>
+ *                                               <form>     
+ * **                                                 
+ **                                            Now the information from user to be put in the ngForm is put as a key:value pair     
+ **                                             The value is the data from the user ,wwhile the key is the name assigned to the imput via the namme attribute
+ *                                                 
+ **                                                 
+ **                                                  <form #formvalues = "ngForm">         
+ **                                                 <label>Your Favourite food<label>                           i.formvalues={"food":""}
+ **                                                 <input type='text' ngModule name="food">
+ *                                               <form> 
+ * **                                                 
+ **                                                 
+ **                                                   
+ *                                 To create a subgroup within the form ,to receive cloosely related data,we use the ngModuleGroup
+ *
+ *
+ * **                                                 
+ **                                                  <form #formvalues = "ngForm">
+ *
+ *                                                  <label>Your Favourite food<label>                           i.formvalues={"food":"", "address":{street:"",house:""}}
+ **                                                 <input type='text' ngModule name="food">
+ *
+ *
+ *                                                  <div ngModuleGroup="address">
+ **                                                 <label>Where do you live<label>                          
+ **                                                 <input type='text' ngModule name="street">
+ *                                                   <label>Your house number<label>                          
+ **                                                 <input type='number' ngModule name="house">
+ *                                                    <div>
+ *                                               <form> 
+ *
+ *
+ * * * ** *                                        ************** Binding Data to a Module ******************
+ *
+ *                    e.g of module         export class user {
+ *                                                  constructor(
+ *                                                            public food:string
+ *                                                            public age:number
+ *                                                            public name:string
+ *                                                            public phone:number
+ *                                                                      ){} 
+ *                                                               }
+ *
+ * *
+ *                                   To create a new module in our form component.
+ *                                        usermodule = new user()
+ *                                    Then we can pass in our desired values to be received in the module.
+ *                                        usermodule = new user("meat",34,George,0741471727)
+ *       
+ *                                    Then the information in this module can be accessesd in our form by  equating the value of each module to an ngModule in brackets and in square parenthesis.This 
+ *                                    This module can be sent back to the server
+ *
+ *
+ *                                                  <label>Your Favourite food<label>                          
+ **                                                 <input type='text' [(ngModule)]="usermodule.food" name="food">
+ *
+ *
+ *                                                  <div ngModuleGroup="address">
+ **                                                 <label>Where do you live<label>                          
+ **                                                 <input type='text'  [(ngModule)]="usermodule.street"name="street">
+ *                                                   <label>Your age<label>                          
+ **                                                 <input type='number'  [(ngModule)]="usermodule.age" name="house">
+ *                                                    <div>
+ *                                               <form> 
+ *
+ *
+ *                                       **************** Track the state and validity of input/control from user **************
+ *  *                                                                yes                             no
+ * *                                                
+ *                           State                                class if TRUE                 class if FALSE                                                                       
+ *               The input/control has been visited                 ng-touched                  ng-untouched
+ *               The input/control's value has  changed             ng-dirty                    ng-pristine                                                   
+ *               The input/control's value is valid                 ng-valid                    ng-invalid 
+ *                                                    
+ *                                                   
+ *                                                  
+ *                                                  
+ *                                                   
+ *                                                  
+ *              **************** ngModule Propertires **************                               
+ *                                                  
+ *                           ngModule                      Property 
+
+ *                           ng-touched                 touched
+ *                           ng-dirty                   dirty                                                   
+ *                           ng-valid                   valid  
+ *                           ng-untouched               untouched        
+ *                           ng-pristine                pristine      
+ *                           ng-invalid                 invalid
+ *                                                   
+ *                                                  
+ *                                                   
+ *              We can use the ngModule properties instead of the ngClasses by assigning the ngModule to a template refernce variable                                    
+ *
+ *                                 <input type='number' #templaterefernce="ngModule" [(ngModule)]="usermodule.age" name="house">
+ *
+ *              The ngModule in a template refernce valiable gives us access to ngModule Properties
+ *
+ *                                 <input type='number' #templaterefernce="ngModule" [(ngModule)]="usermodule.age" name="house">
+ *                                       {{tempalterefernce.untouched}}
+ *
+ *                                                This can be true or false based on user interaction
+ * *                   Now we can validate userinput based on the  boolean state of the ng Module properties
+ * 
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * * * * * ** *                                        ************** Conditionaly apply validation and send userfeedback ******************
+ * *                   Now we can validate userinput based on the  boolean state of the ng Module properties
+ * 
+ *                                   In the above case .The food input tag is empty .Therefore the boolean value of the ngmodule prerty is invalid. 
+ *                                   We can conditionaly apply a class with red outline(class bindig by puting the class to be rendered in brackete if the condition on the equal sign is met) to an input tag if the boolean value is invalid
+ *
+ *                                   #templaterefernce="ngModule"  [class.is-invalid]="tempalterefrence.invalid" 
+ *
+ *                                                   <label>Your Favourite food<label>                          
+ **                                                 <input type='text' [(ngModule)]="usermodule.food" name="food" #templaterefernce="ngModule"  [class.is-invalid]="tempalterefrence.invalid"   >
+ *
+ *
+ *
+ *
+ *                * ** *                            ************** Submitting The form ******************
+ *
+ *                                 When ever a form tag is created in angular .It gets assigned with  the ngForm
+ *                                 This ngform is true if all values in the form are valid and its false if all or one value isn't valid
+ *                                     e.g usermodule.form.valid                    This gves true or false
+ *
+ *                                                          <form #usermodule ="ngForm"> 
+ *                                                               <button [disable]=""usermodule.form.invalid> submit<button/>
+ *
+ *                                                            <form>
+ *<form #usermodule ="ngForm" (ngSubmit)="onsubmit()" novalidate>
+<div class="container-fluid">Hellow
+<h1>Bootstrap Enrollmemt Camp</h1>
+{{usermodule.value}}
+{{usermodel}}
+<div class="form-group">
+    <label>Name</label> <br>
+    <input type="text" placeholder="Write your name here" required #Name="ngModel" [(ngModel)]="usermodel.food"  name="Name" [class.is-invalid]="Name.invalid && Name.touched" class="form-control " >
+    
+</div>
+
+<div class="form-group">
+    <label class="text-danger">Email</label> <br>
+    <input type="email" #name placeholder="Write your email here" required [(ngModel)]="usermodel.name" name="Email" class="form-control">
+     {{name.className}}
+</div>
+
+<div class="form-group">
+    <label>Telephone</label> <br>
+    <input type="tel" placeholder="Write your phone number here" required  #ame="ngModel" [(ngModel)]="usermodel.phone" name="Telephone" class="form-control">
+    <small class="text-danger" [class.d-none]="ame.invalid || ame.untouched">Name is required</small>
+
+</div>
+<h1>My name is {{topics}}</h1>
+
+<div class="form-group">
+    <select class="custom-select" ngModel name="selector">
+        <option selected>I am interested in</option>
+        <option *ngFor='let topic for topics'>{{topic}}</option>
+    
+    </select>
+
+</div>
+
+<div class="mb-3">
+    <label>Time Prefernce</label>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="timePrefernce" ngModel value="morning">
+        <label class="form-check-label">Morning (9Am - 12Pm)</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" ngModel name="timePrefernce" value="morning">
+        <label class="form-check-label">Evening (5pm - 12am)</label>
+    </div>
+</div>
+
+<div class="form-check mb-3">
+    <input class="form-check-input" ngModel name="notification" type="checkbox">
+    <label>Send Me promotional offers</label>
+</div>
+
+</div>
+
+<button class="btn btn-primary"> Submit button</button>
+
+</form>
+ * *
+ *
+ *  
+ * 
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * *                                            ************** Reactive Forms ******************
+ * *                                                       
+ *                                                  -  Code and logic resides in the class   
+ * * *                                              -  No two way binding
+ * *                                                -  Well suited for complex scenarios
+ *   *                                              -  custom validation
+ *  *                                               -  Dynamic validation
+ * *                                                -  Dynamic form fields
+ * *                                                -  There's unit testing
+ * *                                                                       
+ *                               To strat using reactive forms we need to include the ReactiveFormsModule in the app.module  and include it in the imports                        
+ * * *                                                       
+ * *                                                     import { ReactiveFormsModule } from '@angular/forms';  
+ *   *                                                              imports:{
+ *  *                                                                      ReactiveFormsModule
+ * *                                                                        }
+ * *                                                       
+ * *                                                       
+ * *                                         The Html is exactly the same as a normal html website ,but the functionality is in the class component              
+ *                             <form>
+ *                                Your name          <input   type="text">               
+ *                                Your password       <input  type="text" >
+ *                                your phone           <input  type="number" >
+ *                              <form/>
+
+ *                                      In Reactive forms the entire form is represented as form group while the  indvidula inputs are form controls           
+ *                                      _____
+ *                                     |     Username        - form control
+ *                          Form group |     password        - form control
+ *                                     |_____Phone           - form control
+ *
+ *                                   We create the html for the form controls and then instanciet them in the classs
+ *                                             Import {formgroup, formcontrol} from '@angular/core'
+ *                                                  export class formcomponent{
+ *                                                        reactiveform = new formgroup({
+ *                                                                username = new Formcontrol ("")               // Inside the brackets is where we put the values of the form control
+ *                                                                password = new Formcontrol ("")     
+ *                                                                phone    = new Formcontrol ("")     
+ *                                                         
+ *                                                         
+ *                                                                             
+ *                                                                          })
+ *                                                                             }
+ *
+ *
+ *                                             Now we need to bined the html with the form in the component
+ *                                              We bind the form tag with [formgroup] and equate it to the name given to the reactive form group
+ *                                              We bind the input tags with the FormcontrolName tag and give them the names given to the form controls
+ *                                                       <form [formgroup] = reactiveform>
+ *                                                         Your name          <input   type="text" FormControlName= username>               
+ *                                                         Your password       <input  type="text"  FormControlName= password>
+ *                                                         your phone           <input  type="number"  FormControlName= phone >
+ *                                                       <form/>
+ *                                                 
+ *
+ *
+ * * *                                            ************** Nested Form Groups ******************
+ *                                          
+ *       To nest a form group ,we just create an instance of the form control and insteade assignh to it Formgroup and nest the required forms inside it
+ *
+ *                                                   reactiveform = new formgroup({
+ *                                                                username : new Formcontrol ("")               // Inside the brackets is where we put the values of the form control
+ *                                                                password : new Formcontrol ("")     
+ *                                                                phone    :new FormGroup ({
+ *
+ *                                                                            age : new FormControl("")
+ *                                                                            name : new FormControl("")
+ *                                                                                     })     
+ *                                                                                             })
+ *                                                                             }
+ *                         Wrap the nesting control in a container tag and give the container tag a name equal to the nesting form control
+ *
+ *                                                    <form [formgroup] = reactiveform>
+ *                                                         Your name          <input   type="text" FormControlName= username>               
+ *                                                         Your password       <input  type="text"  FormControlName= password>
+ *                                                         your phone           <input  type="number"  FormControlName= phone >
+ *                                                          
+ *                                                        container tag
+ *                                                          <div formGroupName = "phone"> 
+ *                                                                nested control    <input type = "text" formcontrolName="age">
+ *                                                                nested control    <input type = "text" formcontrolName="name">
+ *                                                       
+ * *                                                            
+ *                                                           <div>
+ *                                                       <form/>
+ *
+ *
+ * * * *                                            ************** Seting Values to the controls ******************
+ *                                                               
+ *                                           We can set some values to the inputs if we have them in our data base             
+ *                                           We use ths setValue () method to set all values and the pathValue () method to put some but not all values           
+ *                                           This method is part of the FormGroup assigned to the form              
+ *                                                       
+ *                                                                  
+ *                                                               
+ *                                                               
+ * * * *                                            ************** Form Builder Service to create form controls ******************
+ *                                                               
+ *                                             This form builder is a service ,therefrore we have to imprt it         
+ *                                                    import {FormBuilder} from '@angular/core'
+ *                                                      
+ *                                           export class formComponent(){  
+ *                                                    constructor (private fb:formbuilder){           
+ *                                                               regesterform = this.fb.form({
+ *                                                                           name: ['']
+ *                                                                           password :['']
+ *                                                                           phone: this.fb.group({
+ *                                                                                     age:['']                 
+ *                                                                                           })
+ *                                                                                    }
+ *                                                 The form control Names are the keys              
+ *                                                                
+ *
+ *                                       
+ *
+ *                                           ************** Validation in Reactive forms ******************
+ *                                    
+ *                                   To validate reactive forms , we use  the validator servicce from angular/forms
+ *
+ *
+ *                                           import {FormBuilder,validator} from '@angular/core'
+ *                                                      
+ *                                           export class formComponent(){  
+ *                                                    constructor (private fb:formbuilder){           
+ *                                                               regesterform = this.fb.form({
+ *                                                                           name: ['',validato.required]
+ *                                                                           password :['']
+ *                                                                           phone: this.fb.group({
+ *                                                                                     age:['']                 
+ *                                                                                           })
+ *                                                                                    }
+ *
+ *                                                  We can provide visual feedback to user in html
+ *
+ * *                                                    <form [formgroup] = reactiveform>
+ *                                                         Your name          <input [class.is-invalid] = regester.get('username').invalid&&regester.get('username').touched   type="text" FormControlName= username>               
+ *                                                         Your password       <input  type="text"  FormControlName= password>
+ *                                                         your phone           <input  type="number"  FormControlName= phone >
+ *                                                          
+ *                                                        container tag
+ *                                                          <div formGroupName = "phone"> 
+ *                                                                nested control    <input type = "text" formcontrolName="age">
+ *                                                                nested control    <input type = "text" formcontrolName="name">
+ *                                                       
+ * *                                                            
+ *                                                           <div>
+ *                                                       <form/>
+ *
+ *                               
+ *
+ *                               To put more than one validatorr ,we use anrray insteasd as the second  value in the control
+ *                    export class formComponent(){  
+ *                                                    constructor (private fb:formbuilder){           
+ *                                                               regesterform = this.fb.form({
+ *                                                                           name: ['',[validato.required,validator.minlenth(3)]]
+ *                                                                           password :['']
+ *                                                                           phone: this.fb.group({
+ *                                                                                     age:['']                 
+ *                                                                                           })
+ *                                                                                    }
+ *
+ *
+ *                                  
+ * *                                           ************** Creating Custom Validator ******************
+ *
+ *                        These custom validators are functions .Because these functions can be reused ,we create them externally and export them
+ *                                         import {AbstractControl} from '@angular/forms'
+ *                         export function forbiddenNamevalidator (control : AbstractControl):{[key:string]:any} | null {                             // Here this function returns either a sey string value or null
+ *                                        const forbidden  = /admin/.test(control.value)                                                              // here  we set the forbideen  to true or flase based on if the admin string is in the control value
+ *                                        return forbidden ? {'forbidden ':{value: control.value}} : null               }
+ *
+ *
+ *                           Now to use this validator ,we  need to include it in our  validators array   
+ *                                          import {Forbiddenamevalidator} from 'user-validator.ts'
+ **                    export class formComponent(){  
+ *                                                    constructor (private fb:formbuilder){           
+ *                                                               regesterform = this.fb.form({
+ *                                                                           name: ['',[validator.required,validator.minlenth(3),forbiddennnamevalidator]]
+ *                                                                           password :['']
+ *                                                                           phone: this.fb.group({
+ *                                                                                     age:['']                 
+ *                                                                                           })
+ *                                                                                    }
+ *
+ *
+ *                                                       
+ *
+ *                                    
+ *
+ *
+ *
+ *              
+ *
+ *
+ *
+ *                                                      
+ *                                                       
+ *
+ *
+ *
+ *                                                    
+ *
+ *
+ *
+ *                                                      
+ *
+ *
+ *
+ *                                                       
+ *
+ *
+ *
+ *                                                
+ *
+ *
+ *
+ *                                                 
+ *
+ *
+ *
+ *                                                    
+ *
+ *
+ *
+ *                                                  
+ *
+ *
+ *
+ *                                                       
+ *
+ *                                   
+ *
+ *
+ *
+ *                                                      
+ *
+ *
+ *
+ *
+ *
+ * *
+ *
+ *  
+ * 
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * *
+ *
+ *  
+ * 
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * *
+ *
+ *  
+ * 
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * *
+ *
+ *  
+ * 
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * 
+ * 
+
+
+
+
+ * 
+ *       ***************We can aslo do some tings on the component****************
+ * 
+ *                  In the h2 tags we can instanciate use of variables by use of double brackets and the definig the dersierd variable
+ * 
+ *                                   @Component(
+ *                                        selector:'courses', 
+ *                                       template:"<h2>{{title}}</h2>"               
+ *                                              )
+ *                                     export class Torchcomponent{
+ *                                               title= "Helllow George"
+ *                                                     }
+ * 
+ * or                        @Component(
+ *                                        selector:'courses', 
+ *                                       template:"<h2>{{"The title is "+title}}</h2>"  
+ *                                              )
+ *                                     export class Torchcomponent{
+ *                                               title= "Helllow George"
+ *                                                     }
+ * 
+ * 
+ * 
+ *                       Here we can use templete literals and back ticks
+ * 
+ *                                 @Component(
+ *                                        selector:'courses', 
+ *                                       template:`<h2>{{"The title is"+${title}}}</h2>`  
+ *                                            )
+ *                                     export class Torchcomponent{
+ *                                               title= "Helllow George"
+ *                                                     }
+ * 
+ * 
+ * 
+ * 
+ * 
+ *                                            ********************Directive **************
+ * 
+ * 
+ *                                    @Component(
+ *                                        selector:'courses', 
+ *                                       template:"<h2>{{title}}</h2>
+ *                                             <ul>
+ *                                                  <li *ngFor="let course for courses">{{course}}</li>       //This is like a for loop .We use * to instanciet the directive and ngFOr to indicate to angular that this is a directive
+ * 
+ * 
+ *                                                <ul/>"  
+ *                                              )
+ *                                     export class Torchcomponent{
+ *                                               title= "Helllow George"
+ *                                               courses = ["book","pen","oval"]
+ *                                                     }
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * *      
+*
+*
+** 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+
+
+
+
+
+
+
+
+ */
