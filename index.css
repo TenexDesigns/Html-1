@@ -1,0 +1,59 @@
+.book{
+    background-color: red;
+}
+#pick{
+    background-color: blue;
+}
+
+div {
+    background-color: greenyellow;
+    width: 400px;
+    padding: 9px;
+    text-transform: lowercase;
+
+
+}
+h3{
+    margin:0;
+
+}h2{
+    margin:0;
+}
+
+div h3:hover{
+    color:blue;
+}
+
+li{
+    background-color: red;
+    margin: 6px;
+}
+
+ul{
+    background-color: blue;
+    height:202px;
+}
+
+ol{
+    background-color: green;
+    height:202px;
+
+}
+#image1{
+    border:15px solid saddlebrown;
+    padding: 5px;
+    background-color: white;
+}
+th,td{
+    color: green;
+    border: 9px solid blue;
+    text-align: center;
+}
+table{
+    border: 9px solid blue;
+    border-collapse: collapse;
+    width: 100%;
+
+
+}
+

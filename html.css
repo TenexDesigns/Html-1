@@ -92,6 +92,42 @@
  *                             picture-in-picture" allowfullscreen></iframe>
  *
  *
+ *                                ************* Form input types and Label ***********
+ *
+ *                                  We use label to give user info on the input to be given
+ *                                  To associate the label with the input we use (id) in the input and (for) in the label
+ *                                    
+ *                                  <label for="user">Username<label/>
+ *                                    <input type="text" id="user">
+ *
+ *
+ *
+ *                                ************* Form Input Types  ***********
+ *                    We use the value attribute to put a  default value tat will initialy be in the input tag on load
+ *                    We can Increase the size of the input box by using the size attribute
+ *                    To make the input readonly and non editable we use readonly="true"
+ *                    To disable the input tag we use disable="true"
+ *                              <input type="checkbox">
+ *                              <input type="color" >
+ *                              <input type="date">
+ *                              <input type="email" value="name">
+ *                              <input type="radio">
+ *                              <input type="url" value="name">
+ *                              <input type="text" value="name">
+ *                              <input type="number">
+ *                              <input type="password">
+ *                              <input type="range" value="name">
+ *                              <input type="search" value="name">
+ *                              <input type="submit">
+ *                              <input type="textarea">                     //We can increase the sie of the text area using cols and rows
+ *
+ *
+ *
+ *                                ************* Form Validation  ***********
+ *                                    A form has default validations to validate input values in it e.g for email,number ,age e.t.c
+ *                                    To prevent this default validations and put our own validations we use the 
+ *                                    novalidate attribute on the form tag
+ *                                   <form novalidate> <form/>
  *
  *
  *
@@ -100,6 +136,15 @@
  *
  *
  *
+ *
+ *
+ *
+ *                                ************* Radio Button and name ***********
+ *              Radio buttons need to have same name so that only one of them can be selected
+ *
+ *                        <input type="radio" value="George" name="do" >
+ *                        <input type="radio" value="Eliud" name="do">
+ *                        <input type="radio" value="Boni" name="do">
  *
  *
  *
