@@ -1,0 +1,35 @@
+/*
+
+
+const form1 = document.forms[0];
+
+form1.addEventListener("submit",(e)=>{
+    e.preventDefault()                    // This prevents default behavoiur of form whic refershes every time the submit button is clicked.
+    const valueofInputformForm = form1.querrySelector("#div").value    //This gets the value of the tag in this selector
+
+    // Create elements
+    const div = createElemnt("div");
+    const h2 = createElemnt("h2");
+    const deleteButton = createElement("button")
+
+    //  structure these elemnts here and add these elements to the dom
+    div.appendChild(h2);
+    div.appendChild(deleteButton);
+    form1.appendChild(div)  //Yhis addd the dive created to the form 
+
+
+    // Adding content to the elements we created
+    h2.textContent = valueofInputformForm;
+    deleteBTN = "delete"
+    
+    // Add classes....This helps to bring the styles we had on the form to the new added elements
+    div.classList.add('name')
+    deleteBTN.classList.add('name')
+})
+
+
+
+
+
+
+*/
